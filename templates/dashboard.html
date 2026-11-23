@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}<h1>Analytics Dashboard</h1>
+<div class="cards">
+<div class="card"><small>Total Revenue</small><strong>₹{{ "%.2f"|format(data.revenue) }}</strong></div>
+<div class="card"><small>Average Bill Value</small><strong>₹{{ "%.2f"|format(data.avg_bill) }}</strong></div>
+<div class="card"><small>Total Bills</small><strong>{{ data.bill_count }}</strong></div>
+<div class="card"><small>Products</small><strong>{{ data.product_count }}</strong></div>
+<div class="card"><small>Low-stock Items</small><strong>{{ data.low_stock }}</strong></div></div>
+<div class="panel"><h2>Quick actions</h2><p><a class="button" href="{{ url_for('products') }}">Manage products</a>
+<a class="button" href="{{ url_for('billing') }}">Create bill</a><a class="button" href="{{ url_for('reports') }}">View reports</a></p></div>{% endblock %}

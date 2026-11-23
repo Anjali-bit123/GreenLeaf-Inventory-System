@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}<h1>Billing</h1><section class="panel"><h2>Create a bill</h2>
+<form method="post" class="form-grid"><label>Product<select name="product_id" required>{% for p in products %}<option value="{{ p.id }}">{{ p.name }} — ₹{{ "%.2f"|format(p.price) }} (Stock: {{ p.stock }})</option>{% endfor %}</select></label>
+<label>Quantity<input name="quantity" type="number" min="1" required></label><label>Bill date<input name="bill_date" type="date" value="{{ today }}" required></label><button>Create bill</button></form></section>
+<section class="panel"><h2>Recent bills</h2><button onclick="window.print()" type="button">Print / Save as PDF</button><div class="table-wrap"><table><tr><th>Bill ID</th><th>Date</th><th>Total</th><th>Created by</th></tr>
+{% for b in bills %}<tr><td>#{{ b.id }}</td><td>{{ b.bill_date }}</td><td>₹{{ "%.2f"|format(b.total) }}</td><td>{{ b.username }}</td></tr>{% else %}<tr><td colspan="4">No bills yet.</td></tr>{% endfor %}</table></div></section>{% endblock %}
