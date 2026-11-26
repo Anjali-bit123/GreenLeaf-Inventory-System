@@ -1,58 +1,82 @@
-# GreenLeaf Grocers — Inventory & Sales Management System
+# Product Optimization & Revenue Contribution Analysis for Afficionado Coffee Roasters
 
-A Flask + SQLite + Pandas web application built around the supplied Unified Mentor project requirements.
+## Project overview
+This project analyzes transaction-level sales data for Afficionado Coffee Roasters. It identifies popular and low-selling products, measures revenue contribution by product and category, compares sales-volume rank with revenue rank, and evaluates product-type performance.
 
-## Features
-- Admin and Staff login; passwords stored as hashes.
-- Product management, search and category filtering.
-- Billing with quantity/date validation and automatic stock deduction.
-- Dashboard KPIs: revenue, average bill value, bill count, products and low-stock count.
-- Date-filtered daily sales report, top 10 products and category revenue share.
-- Low-stock, expiry-within-15-days and no-sales-in-30-days lists.
-- CSV export for sales reports; browser print support for bills/pages.
-- Separate SQLite database in tests; 10 unit tests.
+The project includes an interactive Streamlit dashboard built with Python, Pandas and Plotly.
 
-## Setup (Python 3.10+)
-```bash
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
-pip install -r requirements.txt
-python app.py
+## Objectives covered
+- Identify top-selling and least-selling products.
+- Quantify revenue contribution by product and category.
+- Measure revenue concentration across the menu.
+- Compare product sales-volume rank with revenue rank.
+- Analyze revenue share by category (including the categories present in the supplied dataset).
+- Analyze product-type contribution within each category.
+- Provide data-driven menu and merchandising insights.
+
+## Dataset
+`Afficionado Coffee Roasters.xlsx` contains the supplied `Transactions` sheet with 149,116 transaction rows and these fields:
+
+| Column | Description |
+|---|---|
+| transaction_id | Unique transaction identifier |
+| year | Transaction year |
+| transaction_time | Transaction time |
+| transaction_qty | Quantity purchased |
+| store_id | Store identifier |
+| store_location | Physical store location |
+| product_id | Product identifier |
+| unit_price | Price per unit |
+| product_category | Broad product group |
+| product_type | Product variant/type |
+| product_detail | Product details |
+
+## Revenue calculation
+`Revenue = transaction_qty × unit_price`
+
+Revenue share is calculated as product/category revenue divided by total revenue in the currently selected data.
+
+**Important limitation:** The supplied dataset does not contain product cost. Therefore, this project analyzes sales and revenue contribution, not gross profit, net profit or product profitability. It does not invent cost values.
+
+## Dashboard features
+1. KPI summary: total revenue, units sold, transaction count and average revenue per transaction.
+2. Product popularity: top 10 and 10 least-selling products by units sold.
+3. Revenue contribution: top 10 products by revenue and category revenue share.
+4. Sales rank vs revenue rank comparison.
+5. Category and product-type performance.
+6. Revenue concentration and cumulative revenue share.
+7. Product-level detail table and CSV export.
+8. Dynamic business insights and filters for year, category and store location.
+
+## Run locally
+1. Install Python 3.10 or newer.
+2. Download or clone this repository.
+3. Open a terminal in the project folder.
+4. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. Start the dashboard:
+
+   ```bash
+   streamlit run app.py
+   ```
+
+6. Open the local URL displayed in the terminal (usually `http://localhost:8501`).
+
+## Suggested GitHub repository description
+Interactive Python and Streamlit dashboard for product popularity, revenue contribution, category performance and menu optimization using Afficionado Coffee Roasters transaction data.
+
+## Suggested GitHub topics
+`python` `data-analytics` `pandas` `streamlit` `plotly` `data-visualization` `revenue-analysis`
+
+## Project structure
+```text
+Afficionado_Coffee_Roasters_Project/
+├── app.py
+├── requirements.txt
+├── README.md
+└── Afficionado Coffee Roasters.xlsx
 ```
-Open http://127.0.0.1:5000/seed-demo once to create sample users and products.
-Then open http://127.0.0.1:5000/login.
-
-Demo credentials:
-- Admin: `admin` / `Admin@123`
-- Staff: `staff` / `Staff@123`
-
-These are demo-only credentials. Change them and set a strong random `SECRET_KEY` before deployment. Remove or disable `/seed-demo` before public deployment. Do not upload a real database or real customer data to GitHub.
-
-## Run tests
-```bash
-python -m unittest discover -s tests -v
-```
-
-## GitHub upload
-Create a new **public or private** repository on GitHub, then from this folder:
-```bash
-git init
-git add .
-git commit -m "Initial GreenLeaf inventory management project"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/greenleaf-inventory-management.git
-git push -u origin main
-```
-Replace `YOUR-USERNAME` with your own GitHub username. Never put passwords, personal details, or API keys in the repository.
-
-## Deployment
-This app can be deployed on a Python-compatible host (for example Render). Configure a persistent disk for SQLite, set a secure `SECRET_KEY`, install from `requirements.txt`, and use a production WSGI server such as Gunicorn. Add `gunicorn` to requirements and use `gunicorn app:app` as the start command. The demo seed route should be disabled before deployment.
-
-## Notes and scope
-- Sales charts are displayed using the tabular report data in this starter version; a chart library can be added for graphical charts.
-- PDF billing is available through the browser's Print → Save as PDF; sales data can be downloaded as CSV.
-- Stock turnover KPI is not calculated because a reliable cost-of-goods-sold/opening-stock dataset was not supplied. No fabricated metric is shown.
-- The application uses generated demo grocery data only. No personal information is included.
